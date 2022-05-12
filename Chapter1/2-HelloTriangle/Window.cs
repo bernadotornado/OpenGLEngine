@@ -16,7 +16,7 @@ namespace LearnOpenTK
              0.0f,  0.5f, 0.0f  // Top vertex
         };
         */
-        private readonly float[] _vertices =
+        private  float[] _vertices =
         {
             0f, 0f, 0f, // Bottom-left vertex
             0f, 1f, 0.0f, // Bottom-right vertex
