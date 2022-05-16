@@ -16,18 +16,19 @@ namespace OpenGLEngine.Components
         private string _shaderTransformMatrix;
         private Matrix4 transform;
         private Shader _shader;
-        public Quad( Shader shader, string shaderTransformMatrix )
+        public Quad( Shader shader)
         {
             //this.vertices = vertices;
             this._shader = shader;
-            this._shaderTransformMatrix = shaderTransformMatrix;
+  
         }
 
         public void Translate(float x , float y, float z)
         {
             transform = Matrix4.CreateTranslation(x, y, z);
             transform.Transpose();
-            _shader.SetMatrix4(_shaderTransformMatrix, transform);
+            _shader.SetMatrix4("uModelViewMatrix", transform);
+            _shader.SetMatrix4("uProjectionMatrix", Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000));
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.EnableVertexAttribArray(0);
         }

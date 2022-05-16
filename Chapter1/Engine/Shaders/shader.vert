@@ -26,7 +26,8 @@
 // Then, the keyword "vec3" means this is a vector with 3 floats inside.
 
 layout(location = 0) in vec3 aPosition;
-uniform mat4 uTransform;
+uniform mat4 uModelViewMatrix;
+uniform mat4 uProjectionMatrix;
 
 
 // Like C, we have an entrypoint function. In this case, it takes void and returns void, and must be named main.
@@ -38,5 +39,5 @@ uniform mat4 uTransform;
 
 void main(void)
 {
-    gl_Position = uTransform * vec4(aPosition, 1.0);
+    gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
 }

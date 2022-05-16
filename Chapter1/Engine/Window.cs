@@ -16,18 +16,11 @@ namespace OpenGLEngine
         private  float[] _vertices =
         {
             0f, 0f, 0f, // Bottom-left vertex
-            0.5f, 0f, 0f, // Bottom-right vertex
-            0f, 0.5f, 0f, // Top-left vertex
-            0.5f, 0.5f, 0f,  // Top-right vertex
+            100f, 0f, 0f, // Bottom-right vertex
+            0f, 100f, 0f, // Top-left vertex
+            100f,100f, 0f,  // Top-right vertex
         };
         
-        
-        // private  float[] _vertices2 =
-        // {
-        //     0.0f, 0f, 0f, // Bottom-left vertex
-        //     1.0f, 0f, 0.0f, // Bottom-right vertex
-        //     1.0f,  -1f, 0.0f,  // Top vertex
-        // };
         
         private Matrix4 transform = Matrix4.Identity;
 
@@ -61,39 +54,29 @@ namespace OpenGLEngine
            
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
-
+            
+             Matrix4 m = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
+             m.Transpose();
+             Console.WriteLine((m));
+            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
-            position+= e.Time;
-            
-            
-            
-            transform = Matrix4.CreateTranslation((float) (position), 0.0f, 0.0f);
-            transform.Transpose();
-            Console.WriteLine(transform);
-            _shader.SetMatrix4("uTransform", transform);
-            GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
+           //position+= e.Time*100f;
 
+
+           GL.EnableVertexAttribArray(0);
             
-            
-            
-            
-            
-            // transform = Matrix4.CreateTranslation((float) (position), -1f, 0.0f);
-            // transform.Transpose();
-            // _shader.SetMatrix4("uTransform", transform);
-            // GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
-            
-            
-            GL.EnableVertexAttribArray(0);
-            
-            Quad quad = new Quad(_shader, "uTransform" );
+            Quad quad = new Quad(_shader);
             
             quad.Translate((float) (position), -1f, 0.0f);
             
+            
+            
+            Quad quad2 = new Quad(_shader);
+            quad.Translate(0.0f, -1f + (float) position, 0.0f);
             
             SwapBuffers();
         }
@@ -108,12 +91,22 @@ namespace OpenGLEngine
             {
                 Close();
             }
+            if(input.IsKeyDown(Keys.A))
+            {
+                position -= e.Time*100f;
+            }
+            if(input.IsKeyDown(Keys.D))
+            {
+                position += e.Time*100f;
+            }
         }
 
         protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
             GL.Viewport(0, 0, Size.X, Size.Y);
+            Program.windowSize.X = Size.X;
+            Program.windowSize.Y = Size.Y;
         }
        
     }
