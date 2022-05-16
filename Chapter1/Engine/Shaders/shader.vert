@@ -30,6 +30,7 @@ uniform mat4 uModelViewMatrix;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uNormalMatrix;
 uniform mat4 uScaleMatrix;
+uniform mat4 uRotationMatrix;
 
 
 // Like C, we have an entrypoint function. In this case, it takes void and returns void, and must be named main.
@@ -41,5 +42,5 @@ uniform mat4 uScaleMatrix;
 
 void main(void)
 {
-    gl_Position = uProjectionMatrix * uModelViewMatrix * uScaleMatrix *vec4(aPosition, 1.0);
+    gl_Position = uProjectionMatrix * uModelViewMatrix* uRotationMatrix * uScaleMatrix *vec4(aPosition, 1.0);
 }

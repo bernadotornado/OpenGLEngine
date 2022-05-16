@@ -86,6 +86,7 @@ namespace OpenGLEngine
             
             quad.Scale(2f, 1f, 1f);
             quad.Translate((float) (position), -300f, 0.0f);
+            //quad.Rotate(0,0,(float)position);
            
             quad.Draw();
             
