@@ -80,6 +80,12 @@ namespace OpenGLEngine
             player.Translate((float) (position), -400f, 0.0f);
             player.Draw();
             
+            Quad ball = new Quad(_shader);
+            ball.Scale(0.5f, 0.5f, 1f);
+            ball.Translate(0, -400f, 0.0f);
+            ball.Draw();
+            
+            
             SwapBuffers();
         }
         
@@ -101,6 +107,7 @@ namespace OpenGLEngine
             {
                 position += e.Time*400f;
             }
+            
         }
 
         protected override void OnResize(ResizeEventArgs e)

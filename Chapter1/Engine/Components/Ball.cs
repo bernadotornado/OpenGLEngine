@@ -1,7 +1,16 @@
-﻿namespace OpenGLEngine.Components
+﻿using System.Buffers.Text;
+using OpenGLEngine.Common;
+
+namespace OpenGLEngine.Components
 {
-    public class Ball
+    public class Ball : Quad
     {
         
-    }
+        
+        
+        public Ball(Shader shader): base(shader)
+        {
+            
+        }
+    }   
 }
