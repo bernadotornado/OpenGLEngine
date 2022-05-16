@@ -77,19 +77,23 @@ namespace OpenGLEngine
                for (int j = 0; j < 13; j++)
                {
                    Quad _quad = new Quad(_shader);
-                   _quad.Translate(j *150 - Program.windowSize.X/2 , i*150  , 0); 
+                   _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+                   _quad.Draw();
                }
            }
 
             Quad quad = new Quad(_shader);
             
-            quad.Translate((float) (position), -1f, 0.0f);
+            quad.Scale(2f, 1f, 1f);
+            quad.Translate((float) (position), -300f, 0.0f);
+           
+            quad.Draw();
             
             
-            
-            Quad quad2 = new Quad(_shader);
-            quad.Translate(0.0f, -1f + (float) position, 0.0f);
-            
+            //
+            // Quad quad2 = new Quad(_shader);
+            // quad.Translate(0.0f, -1f + (float) position, 0.0f);
+            //
             SwapBuffers();
         }
         
@@ -105,11 +109,11 @@ namespace OpenGLEngine
             }
             if(input.IsKeyDown(Keys.A))
             {
-                position -= e.Time*100f;
+                position -= e.Time*300f;
             }
             if(input.IsKeyDown(Keys.D))
             {
-                position += e.Time*100f;
+                position += e.Time*300f;
             }
         }
 

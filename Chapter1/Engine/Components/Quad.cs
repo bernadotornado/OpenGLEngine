@@ -27,10 +27,24 @@ namespace OpenGLEngine.Components
         {
             transform = Matrix4.CreateTranslation(x, y, z);
             transform.Transpose();
+           
+        }
+
+        public void Scale(float x, float y, float z)
+        { 
+            transform =  transform* Matrix4.CreateScale(x, y, z);
+            
+            transform.Transpose();
+            
+        }
+
+        public void Draw()
+        {
             _shader.SetMatrix4("uModelViewMatrix", transform);
             _shader.SetMatrix4("uProjectionMatrix", Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000));
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.EnableVertexAttribArray(0);
         }
+        
     }
 }
