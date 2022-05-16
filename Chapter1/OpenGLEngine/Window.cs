@@ -65,37 +65,29 @@ namespace LearnOpenTK
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            // _vertices[0]++;
-            // _vertexBufferObject = GL.GenBuffer();
-            // GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-            // GL.BufferData(BufferTarget.ArrayBuffer, _vertices.Length * sizeof(float), _vertices, BufferUsageHint.DynamicDraw);
-            // _vertexArrayObject = GL.GenVertexArray();
-            // GL.BindVertexArray(_vertexArrayObject);
-            // GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-
             GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
-            //position+= e.Time;
+            position+= e.Time;
+            
+            
+            
             transform = Matrix4.CreateTranslation((float) (position), 0.0f, 0.0f);
             transform.Transpose();
             Console.WriteLine(transform);
             _shader.SetMatrix4("uTransform", transform);
-            //_shader.Use();
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
 
-            // transform = Matrix4.CreateTranslation((float) (position), -0.5f, 0.0f);
-            // transform.Transpose();
-            // _shader.SetMatrix4("uTransform", transform);
-            // GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
-            // GL.EnableVertexAttribArray(0);
-            // _shader.Use();
-            SwapBuffers();
             
-            // base.OnRenderFrame(e);
-            // _shader.Use();
-            // GL.Clear(ClearBufferMask.ColorBufferBit);
-            // GL.BindVertexArray(_vertexArrayObject);
-            // GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-            // SwapBuffers();
+            
+            
+            
+            
+            transform = Matrix4.CreateTranslation((float) (position), -1f, 0.0f);
+            transform.Transpose();
+            _shader.SetMatrix4("uTransform", transform);
+            GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
+            GL.EnableVertexAttribArray(0);
+            
+            SwapBuffers();
         }
         
         protected override void OnUpdateFrame(FrameEventArgs e)
