@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Numerics;
-using LearnOpenTK.Common;
+using OpenGLEngine.Common;
+using OpenGLEngine.Components;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
 
-namespace LearnOpenTK
+namespace OpenGLEngine
 {
     public class Window : GameWindow
     {
         
         private  float[] _vertices =
         {
-            0.0f, 0f, 0f, // Bottom-left vertex
-            1.0f, 0f, 0.0f, // Bottom-right vertex
-            0.0f, 1.0f, 0.0f, // Top-left vertex
-            1.0f,  1f, 0.0f,  // Top-right vertex
+            0f, 0f, 0f, // Bottom-left vertex
+            0.5f, 0f, 0f, // Bottom-right vertex
+            0f, 0.5f, 0f, // Top-left vertex
+            0.5f, 0.5f, 0f,  // Top-right vertex
         };
         
         
@@ -81,11 +82,18 @@ namespace LearnOpenTK
             
             
             
-            transform = Matrix4.CreateTranslation((float) (position), -1f, 0.0f);
-            transform.Transpose();
-            _shader.SetMatrix4("uTransform", transform);
-            GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
+            // transform = Matrix4.CreateTranslation((float) (position), -1f, 0.0f);
+            // transform.Transpose();
+            // _shader.SetMatrix4("uTransform", transform);
+            // GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
+            
+            
             GL.EnableVertexAttribArray(0);
+            
+            Quad quad = new Quad(_shader, "uTransform" );
+            
+            quad.Translate((float) (position), -1f, 0.0f);
+            
             
             SwapBuffers();
         }
