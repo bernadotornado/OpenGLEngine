@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using OpenGLEngine.Common;
 using OpenGLEngine.Components;
@@ -68,7 +69,18 @@ namespace OpenGLEngine
 
 
            GL.EnableVertexAttribArray(0);
-            
+
+
+           List<Quad> quads = new List<Quad>();
+           for (int i = 0; i < 3; i++)
+           {
+               for (int j = 0; j < 13; j++)
+               {
+                   Quad _quad = new Quad(_shader);
+                   _quad.Translate(j *150 - Program.windowSize.X/2 , i*150  , 0); 
+               }
+           }
+
             Quad quad = new Quad(_shader);
             
             quad.Translate((float) (position), -1f, 0.0f);
