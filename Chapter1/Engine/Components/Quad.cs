@@ -15,6 +15,7 @@ namespace OpenGLEngine.Components
 
         private string _shaderTransformMatrix;
         private Matrix4 transform;
+        private Matrix4 scale = Matrix4.Identity;
         private Shader _shader;
         public Quad( Shader shader)
         {
@@ -32,7 +33,7 @@ namespace OpenGLEngine.Components
 
         public void Scale(float x, float y, float z)
         { 
-            transform =  transform* Matrix4.CreateScale(x, y, z);
+            scale = Matrix4.CreateScale(x, y, z);
             
             transform.Transpose();
             
@@ -42,6 +43,7 @@ namespace OpenGLEngine.Components
         {
             _shader.SetMatrix4("uModelViewMatrix", transform);
             _shader.SetMatrix4("uProjectionMatrix", Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000));
+            _shader.SetMatrix4("uScaleMatrix", scale);
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.EnableVertexAttribArray(0);
         }

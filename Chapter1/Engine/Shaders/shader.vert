@@ -28,6 +28,8 @@
 layout(location = 0) in vec3 aPosition;
 uniform mat4 uModelViewMatrix;
 uniform mat4 uProjectionMatrix;
+uniform mat4 uNormalMatrix;
+uniform mat4 uScaleMatrix;
 
 
 // Like C, we have an entrypoint function. In this case, it takes void and returns void, and must be named main.
@@ -39,5 +41,5 @@ uniform mat4 uProjectionMatrix;
 
 void main(void)
 {
-    gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
+    gl_Position = uProjectionMatrix * uModelViewMatrix * uScaleMatrix *vec4(aPosition, 1.0);
 }
