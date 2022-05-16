@@ -14,7 +14,7 @@ namespace OpenGLEngine
             
             var nativeWindowSettings = new NativeWindowSettings()
             {
-                Size = new Vector2i(windowSize.Y, windowSize.Y),
+                Size = new Vector2i(windowSize.X, windowSize.Y),
                 Title = "OpenGLEngine",
                 // This is needed to run on macos
                 Flags = ContextFlags.ForwardCompatible,
