@@ -1,4 +1,5 @@
 ﻿using OpenGLEngine.Common;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -9,6 +10,7 @@ namespace OpenGLEngine.Components
         private float _position;
         private float _speed = 400f;
         private GameWindow _window;
+        
         
         public Player(Shader shader, GameWindow window) : base(shader)
         {
@@ -27,6 +29,12 @@ namespace OpenGLEngine.Components
             {
                 _position += _speed * deltaTime;
             }
+            
+            
+            Scale(2.5f, 0.6f, 1f);;
+            Translate((_position), -400f, 0.0f);
+            
+            
         }
     }
 }

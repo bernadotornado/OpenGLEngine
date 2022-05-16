@@ -31,6 +31,7 @@ namespace OpenGLEngine
         private int _vertexArrayObject;
         
         private Shader _shader;
+        private Player _player;
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -57,6 +58,7 @@ namespace OpenGLEngine
             Matrix4 m = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
             m.Transpose();
             Console.WriteLine((m));
+            _player = new Player(_shader, this);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -74,12 +76,12 @@ namespace OpenGLEngine
                }
            }
             
-            Quad player = new Quad(_shader);
+            // Quad player = new Quad(_shader);
             
-            player.Scale(2.5f, 0.6f, 1f);
-            player.Translate((float) (position), -400f, 0.0f);
-            player.Draw();
-            
+            // player.Scale(2.5f, 0.6f, 1f);
+            // player.Translate((float) (position), -400f, 0.0f);
+            // player.Draw();
+            _player.Draw();
             Quad ball = new Quad(_shader);
             ball.Scale(0.5f, 0.5f, 1f);
             ball.Translate(0, -400f, 0.0f);
@@ -99,14 +101,17 @@ namespace OpenGLEngine
             {
                 Close();
             }
-            if(input.IsKeyDown(Keys.A))
-            {
-                position -= e.Time*400f;
-            }
-            if(input.IsKeyDown(Keys.D))
-            {
-                position += e.Time*400f;
-            }
+            
+            _player.Update((float)e.Time);
+            
+            // if(input.IsKeyDown(Keys.A))
+            // {
+            //     position -= e.Time*400f;
+            // }
+            // if(input.IsKeyDown(Keys.D))
+            // {
+            //     position += e.Time*400f;
+            // }
             
         }
 
