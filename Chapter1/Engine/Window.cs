@@ -23,14 +23,12 @@ namespace OpenGLEngine
         };
         
         
-        private Matrix4 transform = Matrix4.Identity;
 
         private double position= 0;
      
         private int _vertexBufferObject;
 
         private int _vertexArrayObject;
-        private int _vertexArrayObject2;
         
         private Shader _shader;
 
@@ -56,22 +54,16 @@ namespace OpenGLEngine
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
             
-             Matrix4 m = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
-             m.Transpose();
-             Console.WriteLine((m));
-            
+            Matrix4 m = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
+            m.Transpose();
+            Console.WriteLine((m));
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
-           //position+= e.Time*100f;
-
-
+           GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
            GL.EnableVertexAttribArray(0);
 
-
-           List<Quad> quads = new List<Quad>();
            for (int i = 0; i < 3; i++)
            {
                for (int j = 0; j < 13; j++)
@@ -81,20 +73,13 @@ namespace OpenGLEngine
                    _quad.Draw();
                }
            }
-
-            Quad quad = new Quad(_shader);
             
-            quad.Scale(2f, 1f, 1f);
-            quad.Translate((float) (position), -300f, 0.0f);
-            //quad.Rotate(0,0,(float)position);
-           
-            quad.Draw();
+            Quad player = new Quad(_shader);
             
+            player.Scale(2.5f, 0.6f, 1f);
+            player.Translate((float) (position), -400f, 0.0f);
+            player.Draw();
             
-            //
-            // Quad quad2 = new Quad(_shader);
-            // quad.Translate(0.0f, -1f + (float) position, 0.0f);
-            //
             SwapBuffers();
         }
         
@@ -110,11 +95,11 @@ namespace OpenGLEngine
             }
             if(input.IsKeyDown(Keys.A))
             {
-                position -= e.Time*300f;
+                position -= e.Time*400f;
             }
             if(input.IsKeyDown(Keys.D))
             {
-                position += e.Time*300f;
+                position += e.Time*400f;
             }
         }
 

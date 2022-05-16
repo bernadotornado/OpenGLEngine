@@ -13,8 +13,7 @@ namespace OpenGLEngine.Components
             0.5f, 0.5f, 0.0f
         };
 
-        private string _shaderTransformMatrix;
-        private Matrix4 transform;
+        private Matrix4 position = Matrix4.Identity;
         private Matrix4 scale = Matrix4.Identity;
         private Matrix4 rotation = Matrix4.Identity;
 
@@ -33,8 +32,8 @@ namespace OpenGLEngine.Components
 
         public void Translate(float x , float y, float z)
         {
-            transform = Matrix4.CreateTranslation(x, y, z);
-            transform.Transpose();
+            position = Matrix4.CreateTranslation(x, y, z);
+            position.Transpose();
             positionVector = new Vector3(x, y, z);
            
         }
@@ -43,7 +42,7 @@ namespace OpenGLEngine.Components
         { 
             scale = Matrix4.CreateScale(x, y, z);
             
-            transform.Transpose();
+            position.Transpose();
             scaleVector = new Vector3(x, y, z);
             
         }
@@ -58,10 +57,9 @@ namespace OpenGLEngine.Components
 
         public void Draw()
         {
-            _shader.SetMatrix4("uModelViewMatrix", transform);
+            _shader.SetMatrix4("uModelViewMatrix", position *scale * rotation);
             _shader.SetMatrix4("uProjectionMatrix", Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000));
-            _shader.SetMatrix4("uScaleMatrix", scale);
-            _shader.SetMatrix4("uRotationMatrix", rotation);
+           
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.EnableVertexAttribArray(0);
         }
