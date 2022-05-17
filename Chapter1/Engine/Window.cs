@@ -32,6 +32,7 @@ namespace OpenGLEngine
         
         private Shader _shader;
         private Player _player;
+        Ball _ball;
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -59,6 +60,7 @@ namespace OpenGLEngine
             m.Transpose();
             Console.WriteLine((m));
             _player = new Player(_shader, this);
+            _ball = new Ball(_shader, this);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -82,11 +84,11 @@ namespace OpenGLEngine
             // player.Translate((float) (position), -400f, 0.0f);
             // player.Draw();
             _player.Draw();
-            Quad ball = new Quad(_shader);
-            ball.Scale(0.5f, 0.5f, 1f);
-            ball.Translate(0, -400f, 0.0f);
-            ball.Draw();
-            
+            // Quad ball = new Quad(_shader);
+            // ball.Scale(0.5f, 0.5f, 1f);
+            // ball.Translate(0, -400f, 0.0f);
+            // ball.Draw();
+            _ball.Draw();
             
             SwapBuffers();
         }
@@ -103,7 +105,7 @@ namespace OpenGLEngine
             }
             
             _player.Update((float)e.Time);
-            
+            _ball.Update((float)e.Time);
             // if(input.IsKeyDown(Keys.A))
             // {
             //     position -= e.Time*400f;

@@ -1,16 +1,34 @@
 ﻿using System.Buffers.Text;
 using OpenGLEngine.Common;
+using System.Numerics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Windowing.Desktop;
 
 namespace OpenGLEngine.Components
 {
     public class Ball : Quad
     {
+        private float _speed = 400f;
+        Vector3 direction= new Vector3(1,1,0);
         
-        
-        
-        public Ball(Shader shader): base(shader)
+        public Ball(Shader shader, GameWindow window): base(shader)
         {
             
+        }
+
+        public void Update(float deltaTime)
+        {
+            var a = new OpenTK.Mathematics.Vector3(direction.X, direction.Y, direction.Z);
+
+            var b = positionVector + a* deltaTime* _speed;
+            Translate(b.X, b.Y, b.Z);
+        }
+
+        public void OnCollision(Quad quad)
+        {
+          //  System.Numerics.Vector3 n = quad.positionVector - positionVector;
+                var n = Vector3.One;
+             direction = System.Numerics.Vector3.Reflect(direction, n);
         }
     }   
 }
