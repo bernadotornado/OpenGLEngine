@@ -3,6 +3,7 @@ using OpenGLEngine.Common;
 using System.Numerics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Desktop;
+using System;
 
 namespace OpenGLEngine.Components
 {
@@ -10,6 +11,8 @@ namespace OpenGLEngine.Components
     {
         private float _speed = 400f;
         Vector3 direction= new Vector3(1,1,0);
+        private float timer = 0;
+        
         
         public Ball(Shader shader, GameWindow window): base(shader)
         {
@@ -20,8 +23,20 @@ namespace OpenGLEngine.Components
         {
             var a = new OpenTK.Mathematics.Vector3(direction.X, direction.Y, direction.Z);
 
-            var b = positionVector + a* deltaTime* _speed;
+            var b = positionVector + a * deltaTime * _speed;
+          
+            
             Translate(b.X, b.Y, b.Z);
+            timer += deltaTime;
+            if (timer > 0.2f)
+            {
+                timer = 0;
+                Random rnd = new Random();  
+                //direction = new Vector3(-direction.X, direction.Y, direction.Z);
+               direction= Vector3.Reflect(direction, new Vector3(0, 1, 0));
+
+            }
+
         }
 
         public void OnCollision(Quad quad)
