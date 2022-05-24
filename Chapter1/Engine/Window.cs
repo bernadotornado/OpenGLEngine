@@ -21,8 +21,9 @@ namespace OpenGLEngine
             0f, 100f, 0f, // Top-left vertex
             100f,100f, 0f,  // Top-right vertex
         };
-        
-        
+
+
+        public static Matrix4 ortho = Matrix4.Identity;
         public static List<Quad> quadRegistry = new List<Quad>();
 
         private double position= 0;
@@ -57,11 +58,21 @@ namespace OpenGLEngine
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
             
-            Matrix4 m = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
-            m.Transpose();
-            Console.WriteLine((m));
+             ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
+            ortho.Transpose();
+          //  Console.WriteLine((m));
             _player = new Player(_shader, this);
             _ball = new Ball(_shader, this);
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    Quad _quad = new Quad(_shader);
+                    _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+                    _quad.Draw();
+                    quadRegistry.Add(_quad);
+                }
+            }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -69,17 +80,21 @@ namespace OpenGLEngine
            GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
            GL.EnableVertexAttribArray(0);
 
-           //quadRegistry.Clear();
-           for (int i = 0; i < 3; i++)
-           {
-               for (int j = 0; j < 13; j++)
-               {
-                   Quad _quad = new Quad(_shader);
-                   _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
-                   _quad.Draw();
-                   //quadRegistry.Add(_quad);
-               }
+           foreach (var q in quadRegistry)
+           {    
+               q.Draw();
            }
+           // //quadRegistry.Clear();
+           // for (int i = 0; i < 3; i++)
+           // {
+           //     for (int j = 0; j < 13; j++)
+           //     {
+           //         Quad _quad = new Quad(_shader);
+           //         _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+           //         _quad.Draw();
+           //         //quadRegistry.Add(_quad);
+           //     }
+           // }
             
             // Quad player = new Quad(_shader);
             

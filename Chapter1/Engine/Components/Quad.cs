@@ -28,16 +28,17 @@ namespace OpenGLEngine.Components
         {
             //this.vertices = vertices;
             this._shader = shader;
-  
+            coll();
         }
 
+        void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale*Window.ortho);
         public void Translate(float x , float y, float z)
         {
             position = Matrix4.CreateTranslation(x, y, z);
             position.Transpose();
             positionVector = new Vector3(x, y, z);
-            collider.CreateCollider(Window.vertices, position*rotation*scale);
-           
+          //  collider.CreateCollider(Window.vertices, position*rotation*scale);
+           coll();
         }
 
         public void Scale(float x, float y, float z)
@@ -46,7 +47,8 @@ namespace OpenGLEngine.Components
             
             position.Transpose();
             scaleVector = new Vector3(x, y, z);
-            collider.CreateCollider(Window.vertices, position*rotation*scale);
+            //collider.CreateCollider(Window.vertices, position*rotation*scale);
+            coll();
         }
         public void Rotate(float x, float y, float z)
         {
@@ -55,7 +57,8 @@ namespace OpenGLEngine.Components
             rotation *= Matrix4.CreateRotationZ(z);
                 // transform.Transpose();
             rotationVector = new Vector3(x, y, z);
-            collider.CreateCollider(Window.vertices, position*rotation*scale);
+         //   collider.CreateCollider(Window.vertices, position*rotation*scale);
+         coll();
         }
 
         public void Draw()

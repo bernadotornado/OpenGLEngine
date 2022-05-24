@@ -125,6 +125,12 @@ namespace OpenGLEngine.Components
                     return true;
                 }
             }
+
+            if (A.bottomRightBoundingBox.X > B.topLeftBoundingBox.X)
+            {
+                direction = Vector3.One;
+                return true;
+            }
             
             direction = Vector3.Zero;
             return false;
