@@ -10,7 +10,6 @@ namespace OpenGLEngine.Components
         public Vector3 bottomLeftBoundingBox;
         public Vector3 bottomRightBoundingBox;
 
-
         public static Vector3 Transform(Vector3 position, Matrix4 matrix)
         {
             return new Vector3(
@@ -18,17 +17,15 @@ namespace OpenGLEngine.Components
                 position.X * matrix.M12 + position.Y * matrix.M22 + position.Z * matrix.M32 + matrix.M42,
                 position.X * matrix.M13 + position.Y * matrix.M23 + position.Z * matrix.M33 + matrix.M43);
         }
-        
-        
-        
-        
-        public Collider(float[] vertecies, Matrix4 transformMatrix)
+
+
+        public void CreateCollider(float[] vertices, Matrix4 transformMatrix)
         {
-            float[] transformedVertecies = new float[vertecies.Length];
+             float[] transformedVertecies = new float[vertices.Length];
             
-            for (int i = 0; i < vertecies.Length; i += 3)
+            for (int i = 0; i < vertices.Length; i += 3)
             {
-                Vector3 vertex = new Vector3(vertecies[i], vertecies[i + 1], vertecies[i + 2]);
+                Vector3 vertex = new Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
                 Vector3 transformedVertex = Transform(vertex, transformMatrix);
                 transformedVertecies[i] = transformedVertex.X;
                 transformedVertecies[i + 1] = transformedVertex.Y;
@@ -40,6 +37,7 @@ namespace OpenGLEngine.Components
             topLeftBoundingBox = new Vector3(transformedVertecies[6], transformedVertecies[7], transformedVertecies[8]);
             topRightBoundingBox = new Vector3(transformedVertecies[9], transformedVertecies[10], transformedVertecies[11]);
             
+           // transform.
             
             
             //
@@ -98,7 +96,12 @@ namespace OpenGLEngine.Components
             //
             // topLeftBoundingBox = new Vector3(minX, minY, minZ);
             // topRightBoundingBox = new Vector3(maxX, minY, minZ);
-            // bottomLeftBoundingBox = new Vector3(min            
+            // bottomLeftBoundingBox = new Vector3(min    
+        }
+        
+        public Collider(float[] vertecies, Matrix4 transformMatrix)
+        {
+            CreateCollider(vertecies, transformMatrix);
         }
 
 

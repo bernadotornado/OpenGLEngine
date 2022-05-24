@@ -14,7 +14,7 @@ namespace OpenGLEngine
     public class Window : GameWindow
     {
         
-        private  float[] _vertices =
+        public  static float[] vertices =
         {
             0f, 0f, 0f, // Bottom-left vertex
             100f, 0f, 0f, // Bottom-right vertex
@@ -23,6 +23,7 @@ namespace OpenGLEngine
         };
         
         
+        public static List<Quad> quadRegistry = new List<Quad>();
 
         private double position= 0;
      
@@ -46,7 +47,7 @@ namespace OpenGLEngine
             _vertexBufferObject = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
            
-            GL.BufferData(BufferTarget.ArrayBuffer, _vertices.Length * sizeof(float), _vertices, BufferUsageHint.DynamicDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.DynamicDraw);
             _vertexArrayObject = GL.GenVertexArray();
            
             GL.BindVertexArray(_vertexArrayObject);
@@ -68,6 +69,7 @@ namespace OpenGLEngine
            GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
            GL.EnableVertexAttribArray(0);
 
+           //quadRegistry.Clear();
            for (int i = 0; i < 3; i++)
            {
                for (int j = 0; j < 13; j++)
@@ -75,6 +77,7 @@ namespace OpenGLEngine
                    Quad _quad = new Quad(_shader);
                    _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
                    _quad.Draw();
+                   //quadRegistry.Add(_quad);
                }
            }
             

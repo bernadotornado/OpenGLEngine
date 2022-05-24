@@ -20,7 +20,8 @@ namespace OpenGLEngine.Components
         public Vector3 positionVector;
         public Vector3 rotationVector;
         public Vector3 scaleVector;
-        
+
+        public Collider collider = new Collider(new float[12], Matrix4.Identity);
         
         private Shader _shader;
         public Quad( Shader shader)
@@ -35,6 +36,7 @@ namespace OpenGLEngine.Components
             position = Matrix4.CreateTranslation(x, y, z);
             position.Transpose();
             positionVector = new Vector3(x, y, z);
+            collider.CreateCollider(Window.vertices, position*rotation*scale);
            
         }
 
@@ -44,7 +46,7 @@ namespace OpenGLEngine.Components
             
             position.Transpose();
             scaleVector = new Vector3(x, y, z);
-            
+            collider.CreateCollider(Window.vertices, position*rotation*scale);
         }
         public void Rotate(float x, float y, float z)
         {
@@ -53,6 +55,7 @@ namespace OpenGLEngine.Components
             rotation *= Matrix4.CreateRotationZ(z);
                 // transform.Transpose();
             rotationVector = new Vector3(x, y, z);
+            collider.CreateCollider(Window.vertices, position*rotation*scale);
         }
 
         public void Draw()
