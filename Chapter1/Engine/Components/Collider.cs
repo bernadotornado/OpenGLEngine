@@ -100,5 +100,31 @@ namespace OpenGLEngine.Components
             // topRightBoundingBox = new Vector3(maxX, minY, minZ);
             // bottomLeftBoundingBox = new Vector3(min            
         }
+
+
+
+        public bool CheckForCollision( Collider collider, out Vector3 direction)
+        {
+            Collider A = this;
+            Collider B = collider;
+
+            if (A.bottomLeftBoundingBox.X > B.topRightBoundingBox.X)
+            {
+                if(B.topRightBoundingBox.Y > A.bottomLeftBoundingBox.Y)
+                {
+                    direction = new Vector3(-1, 0, 0);
+                    return true;
+                }
+
+                if (A.topLeftBoundingBox.Y > B.bottomRightBoundingBox.Y)
+                {
+                    direction = new Vector3(1, 0, 0);
+                    return true;
+                }
+            }
+            
+            direction = Vector3.Zero;
+            return false;
+        }
     }
 }
