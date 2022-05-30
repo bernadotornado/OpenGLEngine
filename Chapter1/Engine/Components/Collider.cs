@@ -1,4 +1,5 @@
-﻿using OpenTK.Mathematics;
+﻿using System;
+using OpenTK.Mathematics;
 using Vector3 = System.Numerics.Vector3;
 
 namespace OpenGLEngine.Components
@@ -9,6 +10,7 @@ namespace OpenGLEngine.Components
         public Vector3 topRightBoundingBox;
         public Vector3 bottomLeftBoundingBox;
         public Vector3 bottomRightBoundingBox;
+        public Quad owner;
 
         public static Vector3 Transform(Vector3 position, Matrix4 matrix)
         {
@@ -19,8 +21,9 @@ namespace OpenGLEngine.Components
         }
 
 
-        public void CreateCollider(float[] vertices, Matrix4 transformMatrix)
+        public void CreateCollider(float[] vertices, Matrix4 transformMatrix, Quad owner)
         {
+            this.owner = owner;
              float[] transformedVertecies = new float[vertices.Length];
             
             for (int i = 0; i < vertices.Length; i += 3)
@@ -99,41 +102,69 @@ namespace OpenGLEngine.Components
             // bottomLeftBoundingBox = new Vector3(min    
         }
         
-        public Collider(float[] vertecies, Matrix4 transformMatrix)
+        public Collider(float[] vertecies, Matrix4 transformMatrix, Quad owner)
         {
-            CreateCollider(vertecies, transformMatrix);
+            CreateCollider(vertecies, transformMatrix, owner);
         }
 
 
 
-        public bool CheckForCollision( Collider collider, out Vector3 direction)
+        // public bool CheckForCollision( Collider collider, out Vector3 direction)
+        // {
+        //     Collider A = this;
+        //     Collider B = collider;
+        //
+        //     if (A.bottomLeftBoundingBox.X > B.topRightBoundingBox.X)
+        //     {
+        //         if(B.topRightBoundingBox.Y > A.bottomLeftBoundingBox.Y)
+        //         {
+        //             direction = new Vector3(-1, 0, 0);
+        //             return true;
+        //         }
+        //
+        //         if (A.topLeftBoundingBox.Y > B.bottomRightBoundingBox.Y)
+        //         {
+        //             direction = new Vector3(1, 0, 0);
+        //             return true;
+        //         }
+        //     }
+        //
+        //     if (A.bottomRightBoundingBox.X > B.topLeftBoundingBox.X)
+        //     {
+        //         direction = Vector3.One;
+        //         return true;
+        //     }
+        //     
+        //     direction = Vector3.Zero;
+        //     return false;
+        // }
+        
+        // Axis aligned Collision Detection
+        public bool CheckForCollision(Collider other, out  Vector3 direction)
         {
-            Collider A = this;
-            Collider B = collider;
-
-            if (A.bottomLeftBoundingBox.X > B.topRightBoundingBox.X)
-            {
-                if(B.topRightBoundingBox.Y > A.bottomLeftBoundingBox.Y)
-                {
-                    direction = new Vector3(-1, 0, 0);
-                    return true;
-                }
-
-                if (A.topLeftBoundingBox.Y > B.bottomRightBoundingBox.Y)
-                {
-                    direction = new Vector3(1, 0, 0);
-                    return true;
-                }
-            }
-
-            if (A.bottomRightBoundingBox.X > B.topLeftBoundingBox.X)
-            {
-                direction = Vector3.One;
-                return true;
-            }
-            
             direction = Vector3.Zero;
-            return false;
+            float x1 = other.topLeftBoundingBox.X - topRightBoundingBox.X;
+            float x2 = topLeftBoundingBox.X - other.topRightBoundingBox.X;
+            if (other.topLeftBoundingBox.X > topRightBoundingBox.X || other.topRightBoundingBox.X < topLeftBoundingBox.X)
+            {
+                return false;
+            }
+            if (other.bottomLeftBoundingBox.Y > topRightBoundingBox.Y || other.topRightBoundingBox.Y < bottomLeftBoundingBox.Y)
+            {
+                return false;
+            }
+            // if (other.topLeftBoundingBox.Z > topRightBoundingBox.Z || other.topRightBoundingBox.Z < topLeftBoundingBox.Z)
+            // {
+            //     return false;
+            // }
+            //
+            Console.WriteLine("Collision detected" + $" {other.owner} collides with {owner}");
+            
+            
+            return true;
         }
+
+
+
     }
 }

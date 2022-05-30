@@ -27,15 +27,15 @@ namespace OpenGLEngine.Components
             {
                 hit = collider.CheckForCollision(VARIABLE.collider, out dir);
             }
-
-            if (hit)
-            {
-                Console.WriteLine("HIT!!!!");
-            }
-            else
-            {
-                Console.WriteLine("NO HIT");
-            }
+            //
+            // if (hit)
+            // {
+            //     Console.WriteLine("HIT!!!!");
+            // }
+            // else
+            // {
+            //     Console.WriteLine("NO HIT");
+            // }
             var a = new OpenTK.Mathematics.Vector3(direction.X, direction.Y, direction.Z);
 
             var b = positionVector + a * deltaTime * _speed;

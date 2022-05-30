@@ -20,8 +20,9 @@ namespace OpenGLEngine.Components
         public Vector3 positionVector;
         public Vector3 rotationVector;
         public Vector3 scaleVector;
+        public int id;
 
-        public Collider collider = new Collider(new float[12], Matrix4.Identity);
+        public Collider collider = new Collider(new float[12], Matrix4.Identity, null);
         
         private Shader _shader;
         public Quad( Shader shader)
@@ -31,7 +32,12 @@ namespace OpenGLEngine.Components
             coll();
         }
 
-        void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale*Window.ortho);
+        public  override  string ToString()
+        {
+            return $"{id}";
+        }
+        
+        void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale*Window.ortho, this);
         public void Translate(float x , float y, float z)
         {
             position = Matrix4.CreateTranslation(x, y, z);

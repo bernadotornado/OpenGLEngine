@@ -62,12 +62,15 @@ namespace OpenGLEngine
             ortho.Transpose();
           //  Console.WriteLine((m));
             _player = new Player(_shader, this);
+            _player.id = 99;
             _ball = new Ball(_shader, this);
+            _ball.id = 100;
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 13; j++)
                 {
                     Quad _quad = new Quad(_shader);
+                    _quad.id = i * 13 + j;
                     _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
                     _quad.Draw();
                     quadRegistry.Add(_quad);
