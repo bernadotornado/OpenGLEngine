@@ -23,9 +23,11 @@ namespace OpenGLEngine.Components
 
         public void CreateCollider(float[] vertices, Matrix4 transformMatrix, Quad owner)
         {
+            
+            
             this.owner = owner;
              float[] transformedVertecies = new float[vertices.Length];
-            
+            transformMatrix.Transpose();
             for (int i = 0; i < vertices.Length; i += 3)
             {
                 Vector3 vertex = new Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
@@ -34,6 +36,9 @@ namespace OpenGLEngine.Components
                 transformedVertecies[i + 1] = transformedVertex.Y;
                 transformedVertecies[i + 2] = transformedVertex.Z;
             }
+            
+           // Console.WriteLine($"Transformed Vertices: {transformedVertecies[0]}, {transformedVertecies[1]}, {transformedVertecies[2]}, {transformedVertecies[3]}, {transformedVertecies[4]}, {transformedVertecies[5]}, {transformedVertecies[6]}, {transformedVertecies[7]}, {transformedVertecies[8]}, {transformedVertecies[9]}");
+            
             
             bottomLeftBoundingBox = new Vector3(transformedVertecies[0], transformedVertecies[1], transformedVertecies[2]);
             bottomRightBoundingBox = new Vector3(transformedVertecies[3], transformedVertecies[4], transformedVertecies[5]);
@@ -138,27 +143,24 @@ namespace OpenGLEngine.Components
         //     direction = Vector3.Zero;
         //     return false;
         // }
-        
+
+
+        public override string ToString()
+        {
+            return $"{owner} Collider: {bottomLeftBoundingBox} {bottomRightBoundingBox} {topLeftBoundingBox} {topRightBoundingBox}";
+        }
+
         // Axis aligned Collision Detection
         public bool CheckForCollision(Collider other, out  Vector3 direction)
         {
             direction = Vector3.Zero;
             float x1 = other.topLeftBoundingBox.X - topRightBoundingBox.X;
             float x2 = topLeftBoundingBox.X - other.topRightBoundingBox.X;
-            if (other.topLeftBoundingBox.X > topRightBoundingBox.X || other.topRightBoundingBox.X < topLeftBoundingBox.X)
-            {
-                return false;
-            }
-            if (other.bottomLeftBoundingBox.Y > topRightBoundingBox.Y || other.topRightBoundingBox.Y < bottomLeftBoundingBox.Y)
-            {
-                return false;
-            }
-            // if (other.topLeftBoundingBox.Z > topRightBoundingBox.Z || other.topRightBoundingBox.Z < topLeftBoundingBox.Z)
-            // {
-            //     return false;
-            // }
-            //
-            Console.WriteLine("Collision detected" + $" {other.owner} collides with {owner}");
+            
+            float y1 = other.topLeftBoundingBox.Y - bottomRightBoundingBox.Y;
+            float y2 = topLeftBoundingBox.Y - other.bottomRightBoundingBox.Y;
+            
+        //    Console.WriteLine("Collision detected" + $" {other.owner} collides with {owner}");
             
             
             return true;

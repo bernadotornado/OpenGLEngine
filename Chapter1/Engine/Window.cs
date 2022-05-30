@@ -87,30 +87,8 @@ namespace OpenGLEngine
            {    
                q.Draw();
            }
-           // //quadRegistry.Clear();
-           // for (int i = 0; i < 3; i++)
-           // {
-           //     for (int j = 0; j < 13; j++)
-           //     {
-           //         Quad _quad = new Quad(_shader);
-           //         _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
-           //         _quad.Draw();
-           //         //quadRegistry.Add(_quad);
-           //     }
-           // }
-            
-            // Quad player = new Quad(_shader);
-            
-            // player.Scale(2.5f, 0.6f, 1f);
-            // player.Translate((float) (position), -400f, 0.0f);
-            // player.Draw();
             _player.Draw();
-            // Quad ball = new Quad(_shader);
-            // ball.Scale(0.5f, 0.5f, 1f);
-            // ball.Translate(0, -400f, 0.0f);
-            // ball.Draw();
             _ball.Draw();
-            
             SwapBuffers();
         }
         
@@ -124,18 +102,13 @@ namespace OpenGLEngine
             {
                 Close();
             }
-            
+
+            // foreach (var VARIABLE in quadRegistry)
+            // {
+            //     Console.WriteLine(VARIABLE.collider);
+            // }
             _player.Update((float)e.Time);
             _ball.Update((float)e.Time);
-            // if(input.IsKeyDown(Keys.A))
-            // {
-            //     position -= e.Time*400f;
-            // }
-            // if(input.IsKeyDown(Keys.D))
-            // {
-            //     position += e.Time*400f;
-            // }
-            
         }
 
         protected override void OnResize(ResizeEventArgs e)

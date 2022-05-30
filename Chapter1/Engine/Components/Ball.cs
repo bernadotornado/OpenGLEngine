@@ -48,9 +48,11 @@ namespace OpenGLEngine.Components
                 timer = 0;
                 Random rnd = new Random();  
                 //direction = new Vector3(-direction.X, direction.Y, direction.Z);
-               direction= Vector3.Reflect(direction, new Vector3(0, 1, 0));
-
+                direction= Vector3.Reflect(direction, new Vector3(0, 1, 0));
+                
+                
             }
+            Console.WriteLine(collider);
 
         }
 

@@ -40,11 +40,11 @@ namespace OpenGLEngine.Components
         void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale*Window.ortho, this);
         public void Translate(float x , float y, float z)
         {
-            position = Matrix4.CreateTranslation(x, y, z);
+            position = Matrix4.CreateTranslation(x, y, z);  
             position.Transpose();
             positionVector = new Vector3(x, y, z);
           //  collider.CreateCollider(Window.vertices, position*rotation*scale);
-           coll();
+            coll();
         }
 
         public void Scale(float x, float y, float z)
