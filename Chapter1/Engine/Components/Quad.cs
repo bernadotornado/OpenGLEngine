@@ -64,7 +64,7 @@ namespace OpenGLEngine.Components
                 // transform.Transpose();
             rotationVector = new Vector3(x, y, z);
          //   collider.CreateCollider(Window.vertices, position*rotation*scale);
-         coll();
+         coll();x
         }
 
         public void Draw()

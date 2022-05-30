@@ -161,8 +161,17 @@ namespace OpenGLEngine.Components
             float y2 = topLeftBoundingBox.Y - other.bottomRightBoundingBox.Y;
             
         //    Console.WriteLine("Collision detected" + $" {other.owner} collides with {owner}");
-            
-            
+            if (other.topLeftBoundingBox.X > topRightBoundingBox.X || other.topRightBoundingBox.X < topLeftBoundingBox.X)
+            {
+                return false;
+            }
+            if (other.bottomLeftBoundingBox.Y > topRightBoundingBox.Y || other.topRightBoundingBox.Y < bottomLeftBoundingBox.Y)
+            {
+                return false;
+            }
+                
+        
+        
             return true;
         }
 

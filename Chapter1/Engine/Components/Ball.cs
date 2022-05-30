@@ -26,16 +26,20 @@ namespace OpenGLEngine.Components
             foreach (var VARIABLE in Window.quadRegistry)
             {
                 hit = collider.CheckForCollision(VARIABLE.collider, out dir);
+            
+          
+                   if (hit)
+                   {
+                       Console.WriteLine("HIT!!!!");
+                   }
+                   else
+                   {
+                       Console.WriteLine("NO HIT");
+                   }
+                   
+                                   
+                   
             }
-            //
-            // if (hit)
-            // {
-            //     Console.WriteLine("HIT!!!!");
-            // }
-            // else
-            // {
-            //     Console.WriteLine("NO HIT");
-            // }
             var a = new OpenTK.Mathematics.Vector3(direction.X, direction.Y, direction.Z);
 
             var b = positionVector + a * deltaTime * _speed;
@@ -52,11 +56,11 @@ namespace OpenGLEngine.Components
                 
                 
             }
-            Console.WriteLine(collider);
+            //Console.WriteLine(collider);
 
         }
 
-        public void OnCollision(Quad quad)
+        public void OnCollision(Quad quad) 
         {
           //  System.Numerics.Vector3 n = quad.positionVector - positionVector;
                 var n = Vector3.One;
