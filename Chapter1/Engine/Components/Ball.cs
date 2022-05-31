@@ -12,7 +12,7 @@ namespace OpenGLEngine.Components
     public class Ball : Quad
     {
         private float _speed = 400f;
-        Vector3 direction= new Vector3(1,1,0);
+        Vector3 direction= new Vector3(1,-1,0);
         private float timer = 0;
         private GameWindow _window;
         
@@ -27,53 +27,62 @@ namespace OpenGLEngine.Components
             float tempY = normal.Y * dot * 2f;
             float tempZ = normal.Z * dot * 2f;
             return new Vector3(vector.X - tempX, vector.Y - tempY, vector.Z - tempZ);
-            
         }
 
         public void Update(float deltaTime)
         {
             bool hit = false;
-            Vector3 dir = Vector3.Zero;
             var a = direction;
             var b = positionVector + a * deltaTime * _speed;
             Translate(b.X, b.Y, b.Z);
-          //   timer += deltaTime;
-          // //  if (timer > 0.5f)
-          //   {
-          //       timer = 0;
-          //       Random rnd = new Random();  
-          //       //direction = new Vector3(-direction.X, direction.Y, direction.Z);
-          //       var input = _window.KeyboardState;
-          //       if(input.IsKeyDown(Keys.D1))
-          //       {
-          //           direction = new Vector3(1, 1, 0);
-          //       }
-          //       if(input.IsKeyDown(Keys.D2))
-          //       {
-          //           direction = new Vector3(-1, 1, 0);
-          //       }
-          //       if(input.IsKeyDown(Keys.D3))
-          //       {
-          //           direction = new Vector3(1, -1, 0);
-          //       }
-          //       if(input.IsKeyDown(Keys.D4))
-          //       {
-          //           direction = new Vector3(-1, -1, 0);
-          //       }
-          //       //direction= Reflect(direction, new Vector3(0, 1, 0));
-          //       
-          //       
-          //   }
-            //Console.WriteLine(collider);
 
+            if (positionVector.X > Program.windowSize.X / 2)
+            {
+                direction = Reflect(direction, new Vector3(1,0,0));
+            }
+            if (positionVector.X < -1*Program.windowSize.X / 2)
+            {
+                direction = Reflect(direction, new Vector3(1,0,0));
+            }
+            if(positionVector.Y > Program.windowSize.Y / 2)
+            {
+                direction = Reflect(direction, new Vector3(0,1,0));
+            }
+            if(positionVector.Y < -1*Program.windowSize.Y / 2)
+            {
+                _window.Close();
+            }
         }
 
-         public void OnCollision() 
+         public void OnCollision(Collider other)
          {
-           //  System.Numerics.Vector3 n = quad.positionVector - positionVector;
-                 var n = new Vector3(0, 1, 0);
-              direction =Reflect(direction, n);
+                
+              float yl = other.topLeftBoundingBox.Y - collider.topLeftBoundingBox.Y;
+              float xr = collider.topRightBoundingBox.X - other.topRightBoundingBox.X;
+
+
+
+              Vector3 normal;
+
+              if (yl > xr)
+              {
+                  normal = new Vector3(0, 1, 0);
+              }
+              else
+              {
+                  normal = new Vector3(1, 0, 0);
+              }
+              
+              
+              
+              direction =Reflect(direction, normal);
               Console.Beep(3000, 100);
+         }
+
+         public void OnCollision( Player player)
+         {
+             direction =Reflect(direction, new Vector3(0,1,0));
+             Console.Beep(3000, 100);
          }
     }   
 }

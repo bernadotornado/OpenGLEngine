@@ -62,8 +62,9 @@ namespace OpenGLEngine
              ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
             ortho.Transpose();
           //  Console.WriteLine((m));
-            _player = new Player(_shader, this);
+             _player = new Player(_shader, this);
              _player.id = 99;
+             _player.Translate(0,-2000,0);
              _ball = new Ball(_shader, this);
              _ball.id = 100;
              for (int i = 0; i < 3; i++)
@@ -78,7 +79,7 @@ namespace OpenGLEngine
                  }
              }
         }
-
+        
         protected override void OnRenderFrame(FrameEventArgs e)
         {
            GL.Clear(ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit);
@@ -88,9 +89,9 @@ namespace OpenGLEngine
            {    
                q.Draw();
            }
-             _player.Draw();
-             _ball.Draw();
-             SwapBuffers();
+           _player.Draw();
+           _ball.Draw();
+           SwapBuffers();
              
         }
         
@@ -110,9 +111,18 @@ namespace OpenGLEngine
             var hita = _ball.collider.CheckForCollision(_player.collider);
             if (hita)
             {
-                _ball.OnCollision();
+                _ball.OnCollision(_player);
             }
-            
+
+            foreach (var q in quadRegistry)
+            {
+                var ax = _ball.collider.CheckForCollision(q.collider);
+                if (ax)
+                {
+                    _ball.OnCollision(q.collider);
+                    q.Translate(30000,0,0);
+                }
+            }
             // if (hit)
             // {
             //     Console.WriteLine("Collision");
@@ -137,6 +147,7 @@ namespace OpenGLEngine
             Program.windowSize.X = Size.X;
             Program.windowSize.Y = Size.Y;
         }
-       
+
+        
     }
 }
