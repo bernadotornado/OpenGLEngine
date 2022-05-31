@@ -151,9 +151,8 @@ namespace OpenGLEngine.Components
         }
 
         // Axis aligned Collision Detection
-        public bool CheckForCollision(Collider other, out  Vector3 direction)
+        public bool CheckForCollision(Collider other)
         {
-            direction = Vector3.Zero;
             float x1 = other.topLeftBoundingBox.X - topRightBoundingBox.X;
             float x2 = topLeftBoundingBox.X - other.topRightBoundingBox.X;
             

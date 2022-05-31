@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
+
 namespace OpenGLEngine.Components
 {
     public class Quad
@@ -37,7 +38,7 @@ namespace OpenGLEngine.Components
             return $"{id}";
         }
         
-        void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale*Window.ortho, this);
+        void coll()=> collider.CreateCollider(Window.vertices, position*rotation*scale, this);
         public void Translate(float x , float y, float z)
         {
             position = Matrix4.CreateTranslation(x, y, z);  
@@ -64,7 +65,7 @@ namespace OpenGLEngine.Components
                 // transform.Transpose();
             rotationVector = new Vector3(x, y, z);
          //   collider.CreateCollider(Window.vertices, position*rotation*scale);
-         coll();x
+         coll();
         }
 
         public void Draw()

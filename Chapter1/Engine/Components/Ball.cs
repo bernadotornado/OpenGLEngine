@@ -25,7 +25,7 @@ namespace OpenGLEngine.Components
             Vector3 dir = Vector3.Zero;
             foreach (var VARIABLE in Window.quadRegistry)
             {
-                hit = collider.CheckForCollision(VARIABLE.collider, out dir);
+                hit = collider.CheckForCollision(VARIABLE.collider);
             
           
                    if (hit)

@@ -8,6 +8,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
+using Vector3 = OpenTK.Mathematics.Vector3;
 
 namespace OpenGLEngine
 {
@@ -61,21 +62,28 @@ namespace OpenGLEngine
              ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
             ortho.Transpose();
           //  Console.WriteLine((m));
-            _player = new Player(_shader, this);
-            _player.id = 99;
-            _ball = new Ball(_shader, this);
-            _ball.id = 100;
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 13; j++)
-                {
-                    Quad _quad = new Quad(_shader);
-                    _quad.id = i * 13 + j;
-                    _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
-                    _quad.Draw();
-                    quadRegistry.Add(_quad);
-                }
-            }
+            // _player = new Player(_shader, this);
+            // _player.id = 99;
+            // _ball = new Ball(_shader, this);
+            // _ball.id = 100;
+            // for (int i = 0; i < 3; i++)
+            // {
+            //     for (int j = 0; j < 13; j++)
+            //     {
+            //         Quad _quad = new Quad(_shader);
+            //         _quad.id = i * 13 + j;
+            //         _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+            //         _quad.Draw();
+            //         quadRegistry.Add(_quad);
+            //     }
+            // }
+            var quad1 = new Quad(_shader);
+            quad1.id = 1;
+            var quad2 = new Quad(_shader);
+            quad2.id = 2;
+            quad1.Translate(-80,80,0);
+            quadRegistry.Add(quad1);
+            quadRegistry.Add(quad2);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -87,9 +95,10 @@ namespace OpenGLEngine
            {    
                q.Draw();
            }
-            _player.Draw();
-            _ball.Draw();
-            SwapBuffers();
+            // _player.Draw();
+            // _ball.Draw();
+             SwapBuffers();
+             
         }
         
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -103,12 +112,24 @@ namespace OpenGLEngine
                 Close();
             }
 
+            
+            var hit  = quadRegistry[0].collider.CheckForCollision(quadRegistry[1].collider);
+            
+            if (hit)
+            {
+                Console.WriteLine("Collision");
+            }
+            else
+            {
+                Console.WriteLine("No Collision");
+            }
+
             // foreach (var VARIABLE in quadRegistry)
             // {
             //     Console.WriteLine(VARIABLE.collider);
             // }
-            _player.Update((float)e.Time);
-            _ball.Update((float)e.Time);
+            // _player.Update((float)e.Time);
+            // _ball.Update((float)e.Time);
         }
 
         protected override void OnResize(ResizeEventArgs e)
