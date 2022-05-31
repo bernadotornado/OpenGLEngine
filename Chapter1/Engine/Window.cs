@@ -62,30 +62,21 @@ namespace OpenGLEngine
              ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
             ortho.Transpose();
           //  Console.WriteLine((m));
-            // _player = new Player(_shader, this);
-            // _player.id = 99;
+            _player = new Player(_shader, this);
+             _player.id = 99;
              _ball = new Ball(_shader, this);
              _ball.id = 100;
-            // for (int i = 0; i < 3; i++)
-            // {
-            //     for (int j = 0; j < 13; j++)
-            //     {
-            //         Quad _quad = new Quad(_shader);
-            //         _quad.id = i * 13 + j;
-            //         _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
-            //         _quad.Draw();
-            //         quadRegistry.Add(_quad);
-            //     }
-            // }
-            var quad1 = new Quad(_shader);
-            quad1.id = 1;
-            var quad2 = new Quad(_shader);
-            quad2.id = 2;
-            quad1.Scale(1,2,1);
-            quad1.Translate(0,-210,0);
-            
-            quadRegistry.Add(quad1);
-            quadRegistry.Add(quad2);
+             for (int i = 0; i < 3; i++)
+             {
+                 for (int j = 0; j < 13; j++)
+                 {
+                     Quad _quad = new Quad(_shader);
+                     _quad.id = i * 13 + j;
+                     _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+                     _quad.Draw();
+                     quadRegistry.Add(_quad);
+                 }
+             }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -97,7 +88,7 @@ namespace OpenGLEngine
            {    
                q.Draw();
            }
-            // _player.Draw();
+             _player.Draw();
              _ball.Draw();
              SwapBuffers();
              
@@ -115,22 +106,27 @@ namespace OpenGLEngine
             }
 
             
-            var hit  = _ball.collider.CheckForCollision(quadRegistry[1].collider);
+            //var hit  = _ball.collider.CheckForCollision(quadRegistry[1].collider);
+            var hita = _ball.collider.CheckForCollision(_player.collider);
+            if (hita)
+            {
+                _ball.OnCollision();
+            }
             
-            if (hit)
-            {
-                Console.WriteLine("Collision");
-            }
-            else
-            {
-                Console.WriteLine("No Collision");
-            }
+            // if (hit)
+            // {
+            //     Console.WriteLine("Collision");
+            // }
+            // else
+            // {
+            //     Console.WriteLine("No Collision");
+            // }
 
             // foreach (var VARIABLE in quadRegistry)
             // {
             //     Console.WriteLine(VARIABLE.collider);
             // }
-            // _player.Update((float)e.Time);
+             _player.Update((float)e.Time);
              _ball.Update((float)e.Time);
         }
 

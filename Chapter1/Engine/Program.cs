@@ -6,12 +6,9 @@ namespace OpenGLEngine
 {
     public static class Program
     {
-        public static Vector2i windowSize = new Vector2i(600, 400);
+        public static Vector2i windowSize = new Vector2i(1920, 1080);
         private static void Main()
         {
-            
-            
-            
             var nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = new Vector2i(windowSize.X, windowSize.Y),
