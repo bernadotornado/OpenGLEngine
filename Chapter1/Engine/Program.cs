@@ -6,7 +6,7 @@ namespace OpenGLEngine
 {
     public static class Program
     {
-        public static Vector2i windowSize = new Vector2i(1920, 1080);
+        public static Vector2i windowSize = new Vector2i(600, 400);
         private static void Main()
         {
             

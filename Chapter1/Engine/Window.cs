@@ -64,8 +64,8 @@ namespace OpenGLEngine
           //  Console.WriteLine((m));
             // _player = new Player(_shader, this);
             // _player.id = 99;
-            // _ball = new Ball(_shader, this);
-            // _ball.id = 100;
+             _ball = new Ball(_shader, this);
+             _ball.id = 100;
             // for (int i = 0; i < 3; i++)
             // {
             //     for (int j = 0; j < 13; j++)
@@ -81,7 +81,9 @@ namespace OpenGLEngine
             quad1.id = 1;
             var quad2 = new Quad(_shader);
             quad2.id = 2;
-            quad1.Translate(-80,80,0);
+            quad1.Scale(1,2,1);
+            quad1.Translate(0,-210,0);
+            
             quadRegistry.Add(quad1);
             quadRegistry.Add(quad2);
         }
@@ -96,7 +98,7 @@ namespace OpenGLEngine
                q.Draw();
            }
             // _player.Draw();
-            // _ball.Draw();
+             _ball.Draw();
              SwapBuffers();
              
         }
@@ -113,7 +115,7 @@ namespace OpenGLEngine
             }
 
             
-            var hit  = quadRegistry[0].collider.CheckForCollision(quadRegistry[1].collider);
+            var hit  = _ball.collider.CheckForCollision(quadRegistry[1].collider);
             
             if (hit)
             {
@@ -129,7 +131,7 @@ namespace OpenGLEngine
             //     Console.WriteLine(VARIABLE.collider);
             // }
             // _player.Update((float)e.Time);
-            // _ball.Update((float)e.Time);
+             _ball.Update((float)e.Time);
         }
 
         protected override void OnResize(ResizeEventArgs e)
