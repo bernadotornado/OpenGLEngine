@@ -8,7 +8,7 @@ namespace OpenGLEngine.Components
     public class Player: Quad
     {
         private float _position;
-        private float _speed = 400f;
+        private float _speed = 800f;
         private GameWindow _window;
         
         
@@ -30,11 +30,8 @@ namespace OpenGLEngine.Components
                 _position += _speed * deltaTime;
             }
             
-            
             Scale(2.5f, 0.6f, 1f);;
             Translate((_position), -400f, 0.0f);
-            
-            
         }
     }
 }

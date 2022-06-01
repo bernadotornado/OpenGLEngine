@@ -23,8 +23,6 @@ namespace OpenGLEngine.Components
 
         public void CreateCollider(float[] vertices, Matrix4 transformMatrix, Quad owner)
         {
-            
-            
             this.owner = owner;
              float[] transformedVertecies = new float[vertices.Length];
             transformMatrix.Transpose();
@@ -37,74 +35,10 @@ namespace OpenGLEngine.Components
                 transformedVertecies[i + 2] = transformedVertex.Z;
             }
             
-           // Console.WriteLine($"Transformed Vertices: {transformedVertecies[0]}, {transformedVertecies[1]}, {transformedVertecies[2]}, {transformedVertecies[3]}, {transformedVertecies[4]}, {transformedVertecies[5]}, {transformedVertecies[6]}, {transformedVertecies[7]}, {transformedVertecies[8]}, {transformedVertecies[9]}");
-            
-            
             bottomLeftBoundingBox = new Vector3(transformedVertecies[0], transformedVertecies[1], transformedVertecies[2]);
             bottomRightBoundingBox = new Vector3(transformedVertecies[3], transformedVertecies[4], transformedVertecies[5]);
             topLeftBoundingBox = new Vector3(transformedVertecies[6], transformedVertecies[7], transformedVertecies[8]);
             topRightBoundingBox = new Vector3(transformedVertecies[9], transformedVertecies[10], transformedVertecies[11]);
-            
-           // transform.
-            
-            
-            //
-            //
-            // 0f, 0f, 0f, // Bottom-left vertex
-            // 100f, 0f, 0f, // Bottom-right vertex
-            // 0f, 100f, 0f, // Top-left vertex
-            // 100f,100f, 0f,  // Top-right vertex
-            //
-            //
-            
-            // var transformedVerts = new float[vertecies.Length];
-            // for (int i = 0; i < vertecies.Length; i += 3)
-            // {
-            //     var vertex = new Vector3(vertecies[i], vertecies[i + 1], vertecies[i + 2]);
-            //     var transformedVertex = Vector3.Transform(vertex, transformMatrix);
-            //     transformedVerts[i] = transformedVertex.X;
-            //     transformedVerts[i + 1] = transformedVertex.Y;
-            //     transformedVerts[i + 2] = transformedVertex.Z;
-            // }
-            //
-            // var minX = transformedVerts[0];
-            // var maxX = transformedVerts[0];
-            // var minY = transformedVerts[1];
-            // var maxY = transformedVerts[1];
-            // var minZ = transformedVerts[2];
-            // var maxZ = transformedVerts[2];
-            //
-            // for (int i = 0; i < transformedVerts.Length; i += 3)
-            // {
-            //     if (transformedVerts[i] < minX)
-            //     {
-            //         minX = transformedVerts[i];
-            //     }
-            //     if (transformedVerts[i] > maxX)
-            //     {
-            //         maxX = transformedVerts[i];
-            //     }
-            //     if (transformedVerts[i + 1] < minY)
-            //     {
-            //         minY = transformedVerts[i + 1];
-            //     }
-            //     if (transformedVerts[i + 1] > maxY)
-            //     {
-            //         maxY = transformedVerts[i + 1];
-            //     }
-            //     if (transformedVerts[i + 2] < minZ)
-            //     {
-            //         minZ = transformedVerts[i + 2];
-            //     }
-            //     if (transformedVerts[i + 2] > maxZ)
-            //     {
-            //         maxZ = transformedVerts[i + 2];
-            //     }
-            // }
-            //
-            // topLeftBoundingBox = new Vector3(minX, minY, minZ);
-            // topRightBoundingBox = new Vector3(maxX, minY, minZ);
-            // bottomLeftBoundingBox = new Vector3(min    
         }
         
         public Collider(float[] vertecies, Matrix4 transformMatrix, Quad owner)
@@ -112,45 +46,11 @@ namespace OpenGLEngine.Components
             CreateCollider(vertecies, transformMatrix, owner);
         }
 
-
-
-        // public bool CheckForCollision( Collider collider, out Vector3 direction)
-        // {
-        //     Collider A = this;
-        //     Collider B = collider;
-        //
-        //     if (A.bottomLeftBoundingBox.X > B.topRightBoundingBox.X)
-        //     {
-        //         if(B.topRightBoundingBox.Y > A.bottomLeftBoundingBox.Y)
-        //         {
-        //             direction = new Vector3(-1, 0, 0);
-        //             return true;
-        //         }
-        //
-        //         if (A.topLeftBoundingBox.Y > B.bottomRightBoundingBox.Y)
-        //         {
-        //             direction = new Vector3(1, 0, 0);
-        //             return true;
-        //         }
-        //     }
-        //
-        //     if (A.bottomRightBoundingBox.X > B.topLeftBoundingBox.X)
-        //     {
-        //         direction = Vector3.One;
-        //         return true;
-        //     }
-        //     
-        //     direction = Vector3.Zero;
-        //     return false;
-        // }
-
-
         public override string ToString()
         {
             return $"{owner} Collider: {bottomLeftBoundingBox} {bottomRightBoundingBox} {topLeftBoundingBox} {topRightBoundingBox}";
         }
 
-        // Axis aligned Collision Detection
         public bool CheckForCollision(Collider other)
         {
             float x1 = other.topLeftBoundingBox.X - topRightBoundingBox.X;
@@ -159,7 +59,6 @@ namespace OpenGLEngine.Components
             float y1 = other.topLeftBoundingBox.Y - bottomRightBoundingBox.Y;
             float y2 = topLeftBoundingBox.Y - other.bottomRightBoundingBox.Y;
             
-        //    Console.WriteLine("Collision detected" + $" {other.owner} collides with {owner}");
             if (other.topLeftBoundingBox.X > topRightBoundingBox.X || other.topRightBoundingBox.X < topLeftBoundingBox.X)
             {
                 return false;
@@ -170,10 +69,27 @@ namespace OpenGLEngine.Components
             }
                 
         
-        
+            OnCollisionEnter(other);
             return true;
+            
         }
 
+        public virtual void OnCollisionEnter(Collider collider)
+        {
+            
+        }
+        
+        public virtual void OnCollisionExit(Collider collider)
+        {
+            
+        }
+
+        public virtual void OnCollisionStay(Collider collider)
+        {
+
+
+
+        }
 
 
     }

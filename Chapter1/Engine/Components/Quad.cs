@@ -7,13 +7,6 @@ namespace OpenGLEngine.Components
 {
     public class Quad
     {
-        float[] vertices = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f
-        };
-
         private Matrix4 position = Matrix4.Identity;
         private Matrix4 scale = Matrix4.Identity;
         private Matrix4 rotation = Matrix4.Identity;
@@ -28,7 +21,6 @@ namespace OpenGLEngine.Components
         private Shader _shader;
         public Quad( Shader shader)
         {
-            //this.vertices = vertices;
             this._shader = shader;
             coll();
         }
@@ -44,7 +36,6 @@ namespace OpenGLEngine.Components
             position = Matrix4.CreateTranslation(x, y, z);  
             position.Transpose();
             positionVector = new Vector3(x, y, z);
-          //  collider.CreateCollider(Window.vertices, position*rotation*scale);
             coll();
         }
 
@@ -54,7 +45,6 @@ namespace OpenGLEngine.Components
             
             position.Transpose();
             scaleVector = new Vector3(x, y, z);
-            //collider.CreateCollider(Window.vertices, position*rotation*scale);
             coll();
         }
         public void Rotate(float x, float y, float z)
@@ -62,10 +52,8 @@ namespace OpenGLEngine.Components
             rotation = Matrix4.CreateRotationX(x);
             rotation *= Matrix4.CreateRotationY(y);
             rotation *= Matrix4.CreateRotationZ(z);
-                // transform.Transpose();
             rotationVector = new Vector3(x, y, z);
-         //   collider.CreateCollider(Window.vertices, position*rotation*scale);
-         coll();
+            coll();
         }
 
         public void Draw()
@@ -76,6 +64,5 @@ namespace OpenGLEngine.Components
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.EnableVertexAttribArray(0);
         }
-        
     }
 }

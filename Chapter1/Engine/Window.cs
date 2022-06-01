@@ -59,25 +59,24 @@ namespace OpenGLEngine
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
             
-             ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
+            ortho = Matrix4.CreateOrthographic(Program.windowSize.X, Program.windowSize.Y, 1000, -1000);
             ortho.Transpose();
-          //  Console.WriteLine((m));
-             _player = new Player(_shader, this);
-             _player.id = 99;
-             _player.Translate(0,-2000,0);
-             _ball = new Ball(_shader, this);
-             _ball.id = 100;
-             for (int i = 0; i < 3; i++)
-             {
-                 for (int j = 0; j < 13; j++)
-                 {
-                     Quad _quad = new Quad(_shader);
-                     _quad.id = i * 13 + j;
-                     _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
-                     _quad.Draw();
-                     quadRegistry.Add(_quad);
-                 }
-             }
+            _player = new Player(_shader, this);
+            _player.id = 99;
+            _player.Translate(0,-2000,0);
+            _ball = new Ball(_shader, this);
+            _ball.id = 100;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    Quad _quad = new Quad(_shader);
+                    _quad.id = i * 13 + j;
+                    _quad.Translate(j *150 - Program.windowSize.X/2 , i*150 +100f , 0); 
+                    _quad.Draw();
+                    quadRegistry.Add(_quad);
+                }
+            }
         }
         
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -102,17 +101,11 @@ namespace OpenGLEngine
             var input = KeyboardState;
 
             if (input.IsKeyDown(Keys.Escape))
-            {
                 Close();
-            }
-
             
-            //var hit  = _ball.collider.CheckForCollision(quadRegistry[1].collider);
-            var hita = _ball.collider.CheckForCollision(_player.collider);
-            if (hita)
-            {
+            if (_ball.collider.CheckForCollision(_player.collider))
                 _ball.OnCollision(_player);
-            }
+            
 
             foreach (var q in quadRegistry)
             {
@@ -123,21 +116,8 @@ namespace OpenGLEngine
                     q.Translate(30000,0,0);
                 }
             }
-            // if (hit)
-            // {
-            //     Console.WriteLine("Collision");
-            // }
-            // else
-            // {
-            //     Console.WriteLine("No Collision");
-            // }
-
-            // foreach (var VARIABLE in quadRegistry)
-            // {
-            //     Console.WriteLine(VARIABLE.collider);
-            // }
-             _player.Update((float)e.Time);
-             _ball.Update((float)e.Time);
+            _player.Update((float)e.Time);
+            _ball.Update((float)e.Time);
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -147,7 +127,5 @@ namespace OpenGLEngine
             Program.windowSize.X = Size.X;
             Program.windowSize.Y = Size.Y;
         }
-
-        
     }
 }
